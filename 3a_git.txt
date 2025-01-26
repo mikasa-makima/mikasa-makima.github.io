@@ -2,14 +2,16 @@ git init
 git clone (repository name)
 echo "Hello, World!" > hello.txt
 git add hello.txt
+ git config user.email "mail"
 git commit -m "Initial commit with hello.txt"
 git checkout -b my-feature-branch
 echo "This is a new feature." >> hello.txt
 git add hello.txt
 git commit -m "Added a new feature to hello.txt"
-git checkout main
+git checkout master
 git merge my-feature-branch
-git push 
-
+ git remote add origin https://github.com/arvind99929/flash.git
+ git push --set-upstream origin master
+git push
 # git optional delete branch
 git branch -d my-feature-branch
