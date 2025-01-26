@@ -1,0 +1,30 @@
+sudo apt install apache2 -y
+sudo apt install mysql-server -y
+sudo mysql_secure_installation
+sudo apt install php libapache2-mod-php php-mysql -y
+sudo systemctl start apache2
+sudo systemctl start mysql
+
+sudo systemctl enable apache2
+sudo systemctl enable mysql
+
+# In the browser, visit:
+http://<your-server-ip>
+
+
+sudo nano /var/www/html/index.php
+<?php
+echo "Hello, World! Welcome to my PHP website!";
+?>
+sudo chown -R www-data:www-data /var/www/html
+sudo chmod -R 755 /var/www/html
+
+# optional -->to check password
+sudo cat /etc/mysql/debian.cnf
+# optional -->create mysql server
+sudo mysql -u root -p
+CREATE DATABASE mywebsite;
+CREATE USER 'myuser'@'localhost' IDENTIFIED BY 'mypassword';
+GRANT ALL PRIVILEGES ON mywebsite.* TO 'myuser'@'localhost';
+FLUSH PRIVILEGES;
+EXIT;
