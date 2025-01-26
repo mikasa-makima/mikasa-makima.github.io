@@ -1,30 +1,26 @@
+sudo apt update && sudo apt upgrade -y
 sudo apt install apache2 -y
+sudo systemctl start apache2
+sudo systemctl enable apache2
 sudo apt install mysql-server -y
 sudo mysql_secure_installation
 sudo apt install php libapache2-mod-php php-mysql -y
-sudo systemctl start apache2
-sudo systemctl start mysql
-
-sudo systemctl enable apache2
-sudo systemctl enable mysql
-
-# In the browser, visit:
-http://<your-server-ip>
-
-
-sudo nano /var/www/html/index.php
-<?php
-echo "Hello, World! Welcome to my PHP website!";
-?>
+cd /var/www/html
+sudo rm index.html
+sudo nano index.php
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My PHP Website</title>
+</head>
+<body>
+    <h1>Welcome to My PHP Website!</h1>
+    <p>Today's date is: <?php echo date('Y-m-d'); ?></p>
+</body>
+</html>
+Save and exit (Ctrl + O, Enter, Ctrl + X).
 sudo chown -R www-data:www-data /var/www/html
 sudo chmod -R 755 /var/www/html
-
-# optional -->to check password
-sudo cat /etc/mysql/debian.cnf
-# optional -->create mysql server
-sudo mysql -u root -p
-CREATE DATABASE mywebsite;
-CREATE USER 'myuser'@'localhost' IDENTIFIED BY 'mypassword';
-GRANT ALL PRIVILEGES ON mywebsite.* TO 'myuser'@'localhost';
-FLUSH PRIVILEGES;
-EXIT;
+Visit http://your-server-ip in your browser.
