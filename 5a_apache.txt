@@ -3,6 +3,9 @@ sudo apt install apache2 -y
 
 sudo systemctl start apache2
 sudo systemctl enable apache2
+cd /var/www/html
+sudo rm index.html
+sudo nano index.html
 
  <!DOCTYPE html>
 <html lang="en">
@@ -16,6 +19,6 @@ sudo systemctl enable apache2
     <p>This is a simple webpage hosted on Apache.</p>
 </body>
 </html>
-
+sudo systemctl restart apache2
 Save the file and exit (press CTRL + X, then Y, and Enter).
 Visit http://<your-server-ip>
