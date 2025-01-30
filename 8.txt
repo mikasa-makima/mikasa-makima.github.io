@@ -1,0 +1,4 @@
+1. aws iam get-user
+
+2. aws iam list-attached-user-policies --user-name <USER_NAME_GOT_IN_STEP_1>
+

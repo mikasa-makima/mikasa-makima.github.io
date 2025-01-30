@@ -1,0 +1,112 @@
+To **create an S3 bucket with versioning enabled** and **grant permissions to view object versions**, follow these steps:
+
+---
+
+## **Step 1: Create an S3 Bucket**
+### **Using AWS Console**
+1. Go to the [AWS S3 Console](https://s3.console.aws.amazon.com/s3).
+2. Click **"Create bucket"**.
+3. Enter a unique **Bucket Name** (e.g., `my-versioned-bucket`).
+4. Select the **Region** where you want the bucket (e.g., `ap-south-1` for Mumbai).
+5. Under **Bucket settings**, enable **Bucket Versioning**.
+6. Click **Create bucket**.
+
+---
+
+### **Using AWS CLI**
+Run the following command to create an S3 bucket in the **Mumbai region**:
+
+```bash
+aws s3api create-bucket --bucket my-versioned-bucket --region ap-south-1 --create-bucket-configuration LocationConstraint=ap-south-1
+```
+
+---
+
+## **Step 2: Enable Versioning on the S3 Bucket**
+Now, enable versioning for the created bucket:
+
+```bash
+aws s3api put-bucket-versioning --bucket my-versioned-bucket --versioning-configuration Status=Enabled
+```
+
+To verify versioning is enabled:
+
+```bash
+aws s3api get-bucket-versioning --bucket my-versioned-bucket
+```
+
+Expected Output:
+```json
+{
+    "Status": "Enabled"
+}
+```
+
+---
+
+## **Step 3: Grant Permissions to View Object Versions**
+To allow users to **view object versions**, attach an **S3 bucket policy**.
+
+### **Using AWS Console**
+1. Open **S3 Console** → Select **your bucket**.
+2. Go to the **Permissions** tab.
+3. Click **Bucket Policy** and add the following policy:
+
+```json
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Principal": "*",
+            "Action": [
+                "s3:ListBucketVersions",
+                "s3:GetObjectVersion"
+            ],
+            "Resource": [
+                "arn:aws:s3:::my-versioned-bucket",
+                "arn:aws:s3:::my-versioned-bucket/*"
+            ]
+        }
+    ]
+}
+```
+> 🔹 This allows users to list and retrieve versions of objects in the bucket.
+
+### **Using AWS CLI**
+To attach the policy via CLI, save the above JSON in a file (`policy.json`) and run:
+
+```bash
+aws s3api put-bucket-policy --bucket my-versioned-bucket --policy file://policy.json
+```
+
+---
+
+## **Step 4: Upload and Retrieve Object Versions**
+### **Upload a File**
+```bash
+aws s3 cp myfile.txt s3://my-versioned-bucket/
+```
+
+### **Modify and Upload Again (Creates a New Version)**
+```bash
+echo "New content" > myfile.txt
+aws s3 cp myfile.txt s3://my-versioned-bucket/
+```
+
+### **List Object Versions**
+```bash
+aws s3api list-object-versions --bucket my-versioned-bucket
+```
+
+This will display all versions of objects in the bucket.
+
+---
+
+## **Summary**
+✅ **Created an S3 bucket**  
+✅ **Enabled versioning**  
+✅ **Granted permissions to list and retrieve object versions**  
+✅ **Uploaded and retrieved versions of objects**  
+
+Now, anyone with the right permissions can access and restore previous versions of objects. 🚀 Let me know if you need more help! 😊

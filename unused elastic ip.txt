@@ -1,0 +1,4 @@
+aws ec2 describe-addresses --query "Addresses[?AssociationId==null].[PublicIp]" --output table
+
+to release it
+aws ec2 release-address --public-ip <Elastic_IP>

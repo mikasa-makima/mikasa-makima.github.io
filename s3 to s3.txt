@@ -1,0 +1,9 @@
+aws s3 mb s3://my-source-bucket-123
+aws s3 mb s3://my-destination-bucket-123
+
+for file-aws s3 cp test-file.txt s3://my-source-bucket-123/
+for folder-aws s3 cp /path/to/local-folder s3://my-source-bucket-123/ --recursive
+aws s3 cp s3://my-source-bucket-123/test-file.txt s3://my-destination-bucket-123/
+aws s3 ls s3://my-destination-bucket-123/
+
+
