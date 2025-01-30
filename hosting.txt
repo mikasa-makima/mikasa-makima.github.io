@@ -1,0 +1,22 @@
+1. Create ec2 instance on the console
+
+2. Search and go to Elastic IPs section, allocate new Elastic IP
+
+3. Right click/select on the newly allocated IP and associate the IP with the created instance
+
+4. Go back to the instance and select it. Click on the security tab and in the inbound rules, select the link under the security group (launch-wizard-something most probably)
+
+5. In the security groups page now, click on the security group id. 
+
+6. Now edit the inbound and outbound rules, by allowing HTTP requests (or port range 80)
+setting source to your public IP(what is my IP)+/32.
+
+ 7. Save rules, go back to instance page and restart instance.
+
+8. Connect to instance, set up apache2 :- 
+	sudo apt install apache2
+	sudo systemctl start apache2
+
+9. Go to /var/www/html, sudo nano <html_page>. Edit the html and save.
+
+10. Go to instance , copy Elastic IP address, paste in new browser tab
