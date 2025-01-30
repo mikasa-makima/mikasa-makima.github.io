@@ -1,3 +1,16 @@
 aws s3 ls
 aws s3 ls | findstr "s3bucket"
 aws s3api get-bucket-policy --bucket <bucket-name>
+
+OR
+
+# List all S3 buckets with the keyword "s3bucket" for linux
+aws s3api list-buckets --query "Buckets[?contains(Name, 's3bucket')].[Name]" --output table
+
+# Check and list publicly accessible buckets
+for bucket in $(aws s3api list-buckets --query "Buckets[?contains(Name, 's3bucket')].Name" --output text); do
+  is_public=$(aws s3api get-bucket-policy-status --bucket $bucket --query "PolicyStatus.IsPublic" --output text)
+  if [ "$is_public" == "True" ]; then
+    echo "Publicly accessible bucket: $bucket"
+  fi
+done
